@@ -1,0 +1,26 @@
+{
+  "name": "aps-x402-composition",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Reference composition: APS delegation + x402 settlement + bilateral receipts. Phase 1 — single-hop, mock action backend, no remote push.",
+  "type": "module",
+  "license": "Apache-2.0",
+  "scripts": {
+    "demo": "tsx src/demo.ts",
+    "verify": "tsx src/verifier.ts fixtures/run.permit-receipt.json fixtures/run.completion-receipt.json fixtures/run.payment-receipt.json fixtures/run.action.json",
+    "regen-fixtures": "tsx src/demo.ts --emit-fixtures",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "agent-passport-system": "2.6.0-alpha.3",
+    "x402": "1.2.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "tsx": "^4.19.0",
+    "typescript": "^5.7.0"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

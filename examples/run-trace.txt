@@ -1,0 +1,71 @@
+$ npm run demo
+
+> aps-x402-composition@0.1.0 demo
+> tsx src/demo.ts
+
+aps-x402-composition: Phase 1 demo
+================================================
+APS SDK:    agent-passport-system @ 2.6.0-alpha.3
+x402 SDK:   x402 @ 1.2.0 (wire-shape cross-check only)
+Substrate:  action_ref = strict RFC 8785 JCS + SHA-256 (lowercase hex)
+
+[1/6] minting principal → agent delegation …
+      delegationId  = del_406dcb8e-93f
+      scope         = commerce.purchase
+      spendLimit    = 5000000 base units (USDC, 6dp)
+
+[2/6] driving x402 settlement (mock facilitator) …
+      invoiceId     = 8ab77873-731e-4aa8-8670-bf8af59634b3
+      payment_hash  = 0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
+      amount        = 1500000 base units
+
+[3/6] executing mock AgentCore-style action …
+      action_id     = act-aa47dd1cc023
+      action_ref    = bfaa8124169053c0a34ad28b5ee52bc5aab7096127e4cc9de2f0edd1f948946d
+      payload_hash  = bf0e70518f3ffcb358663f91be2bdb42064bef6c9b973db58e032c12c7802b8f
+
+[4/6] emitting APS permit receipt + x402 payment receipt …
+      permit.receiptId = rcpt_68be1a0b-e5a
+      paymentReceipt.tx_proof = 0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
+
+[5/6] emitting completion receipt (links permit hash) …
+      completionId        = cmp_05b8cc3b-7e2
+      permitReceiptHash   = cff504b46e63a41e6ddd7454b8d6de9b08c0147063a3a42696001e253a42b9e2
+
+[6/6] writing artifacts to fixtures/ …
+      fixtures/run.delegation.json
+      fixtures/run.action.json
+      fixtures/run.permit-receipt.json
+      fixtures/run.payment-receipt.json
+      fixtures/run.completion-receipt.json
+      fixtures/run.summary.json
+
+DEMO OK — receipt chain end-to-end verifiable.
+Next:  npm run verify
+
+$ npm run verify
+
+> aps-x402-composition@0.1.0 verify
+> tsx src/verifier.ts fixtures/run.permit-receipt.json fixtures/run.completion-receipt.json fixtures/run.payment-receipt.json fixtures/run.action.json
+
+REGULATOR-VIEW RECEIPT VERIFICATION
+============================================================
+[PASS] permit_signature         permit receipt: agent signature verifies
+[PASS] completion_pins_permit   completion receipt pins canonical permit hash
+        cff504b46e63a41e6ddd7454b8d6de9b08c0147063a3a42696001e253a42b9e2
+[PASS] permit_completion_link   linkPermitAndCompletion() reports linked
+[PASS] completion_signature     completion receipt: gateway signature verifies
+[PASS] payment_signature        payment receipt: gateway signature + canonical hash verify
+[PASS] action_ref_match         payment receipt action_ref matches action artifact
+        bfaa8124169053c0a34ad28b5ee52bc5aab7096127e4cc9de2f0edd1f948946d
+[PASS] delegation_ref_match     payment delegation_ref matches permit delegationId
+        del_406dcb8e-93f
+[PASS] payment_hash_shape       payment_hash is 0x + 64 lowercase-hex chars
+        0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
+[PASS] payload_hash_shape       action payload_hash is lowercase-hex SHA-256 (64 chars)
+[PASS] spend_amount_match       permit.action.spend.amount equals payment.amount_base_units
+        1500000
+[PASS] completion_status_match  completion.executionResult matches action.status
+        success
+------------------------------------------------------------
+OVERALL: PASS
