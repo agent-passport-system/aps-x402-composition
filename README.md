@@ -116,7 +116,7 @@ Exit code: `0` on PASS, `1` on FAIL, `2` on argument/load error.
 ## Hashing substrate
 
 The `action_ref` (the cross-engine correlation anchor under
-draft-pidlisnyi-aps-00 §4.1) is computed as **SHA-256(strict RFC 8785
+draft-pidlisnyi-aps-01 §4.1) is computed as **SHA-256(strict RFC 8785
 JCS) in lowercase hex**, via APS's `canonicalizeJCS()` (re-exported from
 `src/core/canonical-jcs.ts`). This matches the `rfc8785@0.1.4` +
 lowercase-hex SHA-256 substrate used across the x402 ecosystem
