@@ -196,9 +196,9 @@ async function step2_settle(delegation: Delegation): Promise<SubmitOutcome> {
   // envelopes, this will throw at the boundary.
   //
   // KNOWN-DIVERGENCE (TODO upstream): x402@1.2.0 made `mimeType` mandatory
-  // on PaymentRequirements; APS's rail (2.6.0-alpha.3) leaves it optional
-  // and does not default it. The demo enriches with a JSON default before
-  // schema-parsing so the round-trip succeeds. File this against APS as a
+  // on PaymentRequirements; APS's rail (2.6.0-alpha.3, still so in 8.1.1)
+  // leaves it optional and does not default it. The demo enriches with a
+  // JSON default before schema-parsing so the round-trip succeeds. File this against APS as a
   // wire-conformance ticket once we move beyond Phase 1.
   const requirements = rail.getRequirements(invoice.invoice_id)
   if (!requirements) {
@@ -418,7 +418,7 @@ function step6_write(
           action_ref_canonicalization: 'strict RFC 8785 JCS (via APS canonical-jcs.ts)',
           permit_link_canonicalization: 'APS canonical-JSON (sorted-keys, null-stripped)',
           hash: 'SHA-256, lowercase hex',
-          aps_sdk_version: '2.6.0-alpha.3',
+          aps_sdk_version: '8.1.1',
           x402_sdk_version: '1.2.0',
           x402_wire_version: X402_VERSION,
         },
@@ -495,7 +495,7 @@ async function main() {
 
   log('aps-x402-composition: Phase 1 demo')
   log('================================================')
-  log(`APS SDK:    agent-passport-system @ 2.6.0-alpha.3`)
+  log(`APS SDK:    agent-passport-system @ 8.1.1`)
   log(`x402 SDK:   x402 @ 1.2.0 (wire-shape cross-check only)`)
   log(`Substrate:  action_ref = strict RFC 8785 JCS + SHA-256 (lowercase hex)`)
   log('')

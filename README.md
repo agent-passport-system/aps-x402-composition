@@ -140,9 +140,9 @@ EIP-3009 authorization) follow upstream x402 v1 unchanged.
 ## Known divergence (Phase 1)
 
 - **`mimeType` on `PaymentRequirements`.** Upstream x402@1.2.0 makes
-  `mimeType` mandatory; APS@2.6.0-alpha.3's bundled rail leaves it
-  optional and does not default it. The demo enriches with
-  `application/json` before validating against the upstream zod schema.
+  `mimeType` mandatory; APS's bundled rail (2.6.0-alpha.3 through
+  8.1.1) leaves it optional and does not default it. The demo enriches
+  with `application/json` before validating against the upstream zod schema.
   Tracking as an APS wire-conformance ticket; not affecting payments,
   only schema strictness.
 
@@ -179,7 +179,7 @@ EIP-3009 authorization) follow upstream x402 v1 unchanged.
 .
 ├── README.md
 ├── LICENSE                 # Apache-2.0
-├── package.json            # APS@2.6.0-alpha.3, x402@1.2.0, tsx, typescript
+├── package.json            # APS@8.1.1, x402@1.2.0, tsx, typescript
 ├── tsconfig.json
 ├── src/
 │   ├── demo.ts             # end-to-end composition runner
